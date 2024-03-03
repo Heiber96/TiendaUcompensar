@@ -1,0 +1,28 @@
+<!-- detallesservicio.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de Características - Tienda Virtual</title>
+    <link rel="stylesheet" href="/css/detalles.css">
+</head>
+
+<body>
+    <h1>Detalles de Características</h1>
+
+    <div class="contenedor-detalles">
+        <div class="caracteristicas-detalles">
+            <h2>Características</h2>
+            <p>Procesador: <span th:text="${caracteristicas.procesador}"></span></p>
+            <p>Almacenamiento: <span th:text="${caracteristicas.almacenamiento}"></span></p>
+            <p>RAM: <span th:text="${caracteristicas.ram}"></span></p>
+        </div>
+    </div>
+
+    <!-- Enlaces adicionales u otros elementos aquí -->
+
+    <a th:href="@{/dispositivos/listadodispositivos}" class="btn-detalles">Volver a la Lista de Dispositivos</a>
+</body>
+
+</html>

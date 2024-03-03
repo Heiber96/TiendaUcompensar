@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Dispositivos - Tienda Virtual</title>
+    <link rel="stylesheet" href="/css/listado.css">
+</head>
+
+<body>
+
+    <h1>Listado de Dispositivos</h1>
+
+    <div class="dispositivos-lista">
+        <!-- Iterar sobre dispositivos y mostrar cada uno -->
+        <div th:each="dispositivo : ${dispositivos}" class="dispositivo-container">
+            <img th:src="${dispositivo.urlImagen}" alt="Imagen del dispositivo" class="dispositivo-imagen">
+            <h2 class="dispositivo-titulo" th:text="${dispositivo.nombre}"></h2>
+            <p class="dispositivo-descripcion" th:text="${dispositivo.tipo} + ' - ' + ${dispositivo.marca}"></p>
+            <!-- Agregar un botón de detalles para cada dispositivo -->
+            <a th:href="@{/dispositivos/detalle/{id}(id=${dispositivo.id})}" class="btn-detalles">Detalles</a>
+        </div>
+    </div>
+
+    <!-- Enlace para volver a la página principal y agregar nuevo dispositivo -->
+    <div class="enlaces">
+        <a th:href="@{/dispositivos/agregardispositivo}" class="enlace">Agregar Nuevo Dispositivo</a>
+    </div>
+
+</body>
+
+</html>

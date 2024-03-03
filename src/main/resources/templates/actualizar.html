@@ -1,0 +1,57 @@
+<!-- actualizar.html -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar Dispositivo - Tienda Virtual</title>
+    <link rel="stylesheet" href="/css/actualizar.css">
+</head>
+
+<body>
+    <h1>Actualizar Dispositivo</h1>
+
+    <form th:action="@{/dispositivos/actualizardispositivo}" th:object="${dispositivo}" method="post">
+        <!-- Campos para actualizar -->
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required>
+        <br>
+        <label for="marca">Marca:</label>
+        <input type="text" id="marca" name="marca" th:field="*{marca}" required>
+        <br>
+        <label for="tipo">Tipo:</label>
+        <input type="text" id="tipo" name="tipo" th:field="*{tipo}" required>
+        <br>
+
+        <!-- Campos adicionales para la actualización -->
+        <label for="procesador">Procesador:</label>
+        <input type="text" id="procesador" name="procesador" th:field="*{caracteristicas.procesador}" required>
+        <br>
+        <label for="ram">RAM:</label>
+        <input type="number" id="ram" name="ram" th:field="*{caracteristicas.ram}" required>
+        <br>
+        <label for="almacenamiento">Almacenamiento:</label>
+        <input type="text" id="almacenamiento" name="almacenamiento" th:field="*{caracteristicas.almacenamiento}" required>
+        <br>
+        <label for="fechaLanzamiento">Fecha de Lanzamiento:</label>
+        <input type="date" id="fechaLanzamiento" name="fechaLanzamiento" th:field="*{fechaLanzamiento}">
+        <br>
+        <label for="camara">Cámara:</label>
+        <input type="text" id="camara" name="camara" th:field="*{camara}">
+        <br>
+        <label for="urlImagen">URL de la Imagen:</label>
+        <input type="text" id="urlImagen" name="urlImagen" th:field="*{urlImagen}" required>
+        <br>
+
+        <!-- Campo oculto para el ID -->
+        <input type="hidden" th:field="*{id}" />
+
+        <button type="submit">Actualizar</button>
+    </form>
+
+    <!-- Enlace para volver a la lista de dispositivos -->
+    <a th:href="@{/dispositivos/listadodispositivos}">Volver a la Lista de Dispositivos</a>
+</body>
+
+</html>

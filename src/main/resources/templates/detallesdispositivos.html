@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Dispositivo - Tienda Virtual</title>
+    <link rel="stylesheet" href="/css/detalles.css">
+</head>
+
+<body>
+    <h1>Detalles del Dispositivo</h1>
+
+    <div class="contenedor-detalles">
+        <div class="caracteristicas-detalles">
+            <h2>Información General</h2>
+            <p>Nombre: <span th:text="${dispositivo.nombre}"></span></p>
+            <p>Marca: <span th:text="${dispositivo.marca}"></span></p>
+            <p>Tipo: <span th:text="${dispositivo.tipo}"></span></p>
+            <p>Procesador: <span th:text="${dispositivo.caracteristicas.procesador}"></span></p>
+            <p>Almacenamiento: <span th:text="${dispositivo.caracteristicas.almacenamiento}"></span></p>
+            <p>RAM: <span th:text="${dispositivo.caracteristicas.ram}"></span></p>
+            <p>Fecha de Lanzamiento: <span th:text="${dispositivo.fechaLanzamiento}"></span></p>
+            <p>Cámara: <span th:text="${dispositivo.camara}"></span></p>
+            <p>Imagen: <img th:src="${dispositivo.urlImagen}" alt="Imagen del Dispositivo"></p>
+        </div>
+
+        <div class="reseñas">
+            <h2>Reseñas de Clientes</h2>
+            <!-- Mostrar reseñas existentes aquí, si las tienes -->
+            <ul>
+                <li th:each="resena : ${resenas}">
+                    <p>Nombre: <span th:text="${resena.nombre}"></span></p>
+                    <p>Comentario: <span th:text="${resena.comentario}"></span></p>
+                </li>
+            </ul>
+
+            <!-- Formulario para agregar una nueva reseña -->
+            <form th:action="@{/dispositivos/agregarresena/{id}(id=${dispositivo.id})}" method="post" class="formulario-reseñas">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="comentario">Comentario:</label>
+                <textarea id="comentario" name="comentario" required></textarea>
+
+                <button type="submit">Publicar Reseña</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Enlaces adicionales u otros elementos aquí -->
+    <form th:action="@{/dispositivos/eliminar/{id}(id=${dispositivo.id})}" method="post">
+        <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este dispositivo?')">Eliminar Dispositivo</button>
+    </form>
+    <a th:href="@{/dispositivos/listadodispositivos}" class="btn-detalles">Volver a la Lista de Dispositivos</a>
+</body>
+
+</html>
+
