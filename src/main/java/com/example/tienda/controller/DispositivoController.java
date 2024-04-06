@@ -100,7 +100,7 @@ public String mostrarDetalles(@PathVariable Long id, Model model) {
     public String mostrarFormularioActualizarDispositivo(@PathVariable Long id, Model model) {
         Dispositivo dispositivo = dispositivoService.obtenerDispositivoPorId(id);
         model.addAttribute("dispositivo", dispositivo);
-        return "actualizar";
+        return "actualizar"; 
     }
 
     @PutMapping("/actualizardispositivo/{id}")
