@@ -5,10 +5,15 @@ import com.example.tienda.model.Resena;
 import com.example.tienda.model.Caracteristicas;
 import com.example.tienda.service.CaracteristicasService;
 import com.example.tienda.service.DispositivoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.tienda.service.ResenaService;
+
+
+
 import java.util.List;
 
 @Controller
@@ -26,38 +31,27 @@ public class DispositivoController {
     }
 
     @GetMapping({ "/", "/listadodispositivos" })
-    public String listaDispositivos(Model model) {
-        List<Dispositivo> dispositivos = dispositivoService.obtenerTodosLosDispositivos();
-        model.addAttribute("dispositivos", dispositivos);
-        return "listadodispositivos";
+    @ResponseBody
+    public List<Dispositivo> listaDispositivos() {
+        return dispositivoService.obtenerTodosLosDispositivos();
     }
 
-    @GetMapping("/agregardispositivo")
-    public String mostrarFormularioAgregarDispositivo(Model model) {
-        model.addAttribute("newDispositivo", new Dispositivo());
-        return "agregardispositivo";
-    }
-
+    
+    private static final Logger logger = LoggerFactory.getLogger(DispositivoController.class);
     @PostMapping("/agregardispositivo")
-    public String agregarDispositivo(@ModelAttribute("newDispositivo") Dispositivo dispositivo) {
-
+    @ResponseBody
+    public Dispositivo agregarDispositivo(@RequestBody Dispositivo dispositivo) {
+        logger.info("Objeto de entrada: {}", dispositivo);
         if (dispositivo.getUrlImagen() == null || dispositivo.getUrlImagen().isEmpty()) {
             dispositivo.setUrlImagen("ruta/a/tu/imagen.jpg");
         }
-
-        // Obtener las características del dispositivo
+    
         Caracteristicas caracteristicas = dispositivo.getCaracteristicas();
-
-        // Guardar las Caracteristicas antes de guardar el Dispositivo
-        caracteristicasService.guardarCaracteristicas(caracteristicas);
-
-        // Asignar las Caracteristicas al Dispositivo
+        
         dispositivo.setCaracteristicas(caracteristicas);
-
-        // Guardar el Dispositivo
         dispositivoService.agregarDispositivo(dispositivo);
-
-        return "redirect:/dispositivos/listadodispositivos";
+    
+        return dispositivo;
     }
 
     @GetMapping("/detalle/{id}")
@@ -92,22 +86,28 @@ public String mostrarDetalles(@PathVariable Long id, Model model) {
         return "redirect:/dispositivos/detalle/" + id;
     }
 
-    @PostMapping("/eliminar/{id}")
-    public String eliminarDispositivoDesdeDetalles(@PathVariable Long id) {
+    @DeleteMapping("/eliminar/{id}")
+    @ResponseBody
+    public String eliminarDispositivo(@PathVariable Long id) {
+        logger.info("Eliminando dispositivo con ID: {}", id);
         dispositivoService.eliminarDispositivo(id);
-        return "redirect:/dispositivos/listadodispositivos";
+
+        return "Dispositivo eliminado correctamente.";
     }
+
 
     @GetMapping("/actualizar/{id}")
     public String mostrarFormularioActualizarDispositivo(@PathVariable Long id, Model model) {
         Dispositivo dispositivo = dispositivoService.obtenerDispositivoPorId(id);
         model.addAttribute("dispositivo", dispositivo);
-        return "actualizar";
+        return "actualizar"; 
     }
 
-    @PostMapping("/actualizardispositivo")
-    public String actualizarDispositivo(@ModelAttribute("dispositivo") Dispositivo dispositivo) {
-        dispositivoService.actualizarDispositivo(dispositivo);
-        return "redirect:/dispositivos/listadodispositivos";
+    @PutMapping("/actualizardispositivo/{id}")
+    @ResponseBody
+    public String actualizarDispositivo(@PathVariable Long id, @RequestBody Dispositivo dispositivo) {
+        logger.info("Actualizando dispositivo con ID: {}", id);
+        dispositivoService.actualizarDispositivoPorId(id, dispositivo);
+        return "Dispositivo actualizado correctamente.";
     }
 }
