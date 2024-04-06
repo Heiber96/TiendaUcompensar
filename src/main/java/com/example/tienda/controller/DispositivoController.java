@@ -96,12 +96,6 @@ public String mostrarDetalles(@PathVariable Long id, Model model) {
     }
 
 
-    @GetMapping("/actualizar/{id}")
-    public String mostrarFormularioActualizarDispositivo(@PathVariable Long id, Model model) {
-        Dispositivo dispositivo = dispositivoService.obtenerDispositivoPorId(id);
-        model.addAttribute("dispositivo", dispositivo);
-        return "actualizar"; 
-    }
 
     @PutMapping("/actualizardispositivo/{id}")
     @ResponseBody
