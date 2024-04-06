@@ -11,4 +11,5 @@ public interface DispositivoService {
     Dispositivo obtenerDispositivoConCaracteristicas(Long id);
     void eliminarDispositivo(Long id);
     void actualizarDispositivo(Dispositivo dispositivo);
+    void actualizarDispositivoPorId(Long id, Dispositivo dispositivo);
 }
